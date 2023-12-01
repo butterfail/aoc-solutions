@@ -6,7 +6,7 @@ dotenv.config();
 
 export const getInput = async <T extends string>(
   year: number,
-  day: number | string,
+  day: number,
   filename: T,
 ): Promise<string> => {
   const { AOC_SESSION_COOKIE } = process.env;
@@ -14,7 +14,7 @@ export const getInput = async <T extends string>(
     throw new Error('AOC_SESSION_COOKIE is not defined');
   }
 
-  const filePath = path.resolve(`./${year}/day-${day}/${filename}`);
+  const filePath = path.resolve(`./${year}/day-${day.toString().padStart(2, '0')}/${filename}`);
   if (fs.existsSync(filePath)) {
     return fs.readFileSync(filePath, 'utf-8');
   }
