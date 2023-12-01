@@ -5,7 +5,6 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { _dirname } from 'utils/dirname';
 
 console.clear();
 
@@ -22,7 +21,7 @@ export type Filename = 'input' | 'input.test';
 
 const format = (filename: Filename): Input => {
   const [rawStacks, rawMoves] = fs
-    .readFileSync(path.resolve(_dirname, filename), 'utf8')
+    .readFileSync(path.resolve(__dirname, filename), 'utf8')
     .replace(/\r/g, '')
     .trimEnd()
     .split('\n\n')

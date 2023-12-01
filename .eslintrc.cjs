@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/semi': [2, 'always'],
     quotes: 'off',
     '@typescript-eslint/quotes': ['error', 'single'],
@@ -114,7 +115,6 @@ module.exports = {
     'no-array-constructor': ['error'],
     'no-unreachable': ['error'],
     'no-multi-spaces': ['error'],
-    'unicorn/prefer-module': 'error',
     'unicorn/prefer-node-protocol': 'error',
     'unicorn/filename-case': [
       'error',
