@@ -3,75 +3,76 @@
  * https://adventofcode.com/2022/day/2
  */
 
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from 'node:fs';
+import path from 'node:path';
+import { _dirname } from 'utils/dirname';
 
-console.clear()
+console.clear();
 
 export type Input = {
-  opponent: string
-  player: string
-}[]
-export type Filename = 'input' | 'input.test'
+  opponent: string;
+  player: string;
+}[];
+export type Filename = 'input' | 'input.test';
 
 const format = (filename: Filename): Input => {
   return fs
-    .readFileSync(path.resolve(__dirname, filename), 'utf8')
+    .readFileSync(path.resolve(_dirname, filename), 'utf8')
     .replace(/\r/g, '')
     .trim()
     .split('\n')
-    .map(line => {
-      const [opponent, player] = line.split(' ')
-      return { opponent, player }
-    })
-}
+    .map((line) => {
+      const [opponent, player] = line.split(' ');
+      return { opponent, player };
+    });
+};
 
-enum shape {
+enum Shape {
   rock = 1,
   paper = 2,
-  scissors = 3
+  scissors = 3,
 }
 
 const calculateScore = (opponent: number, player: number): number => {
   if (opponent === player) {
-    return player + 3
+    return player + 3;
   }
 
   if (
-    (opponent === shape.rock && player === shape.paper) ||
-    (opponent === shape.paper && player === shape.scissors) ||
-    (opponent === shape.scissors && player === shape.rock)
+    (opponent === Shape.rock && player === Shape.paper) ||
+    (opponent === Shape.paper && player === Shape.scissors) ||
+    (opponent === Shape.scissors && player === Shape.rock)
   ) {
-    return player + 6
+    return player + 6;
   }
 
-  return player
-}
+  return player;
+};
 
 /**
  * Part 1
  */
-enum mapInput {
+enum MapInput {
   // Opponent
-  'A' = shape.rock,
-  'B' = shape.paper,
-  'C' = shape.scissors,
+  'A' = Shape.rock,
+  'B' = Shape.paper,
+  'C' = Shape.scissors,
   // Player
-  'X' = shape.rock,
-  'Y' = shape.paper,
-  'Z' = shape.scissors
+  'X' = Shape.rock,
+  'Y' = Shape.paper,
+  'Z' = Shape.scissors,
 }
 
 export const part1 = (input: Input) => {
-  const scores = input.map(line => {
-    const opponentShape = Number(mapInput[line.opponent])
-    const playerShape = Number(mapInput[line.player])
-    return calculateScore(opponentShape, playerShape)
-  })
+  const scores = input.map((line) => {
+    const opponentShape = Number(MapInput[line.opponent]);
+    const playerShape = Number(MapInput[line.player]);
+    return calculateScore(opponentShape, playerShape);
+  });
 
-  return scores.reduce((acc, value) => acc + value, 0)
-}
-console.log('Part 1', part1(format('input')))
+  return scores.reduce((acc, value) => acc + value, 0);
+};
+console.log('Part 1', part1(format('input')));
 
 /**
  * Part 2
@@ -79,31 +80,31 @@ console.log('Part 1', part1(format('input')))
 const solutions = {
   A: {
     // rock
-    X: shape.scissors, // lose
-    Y: shape.rock, // draw
-    Z: shape.paper // win
+    X: Shape.scissors, // lose
+    Y: Shape.rock, // draw
+    Z: Shape.paper, // win
   },
   B: {
     // paper
-    X: shape.rock,
-    Y: shape.paper,
-    Z: shape.scissors
+    X: Shape.rock,
+    Y: Shape.paper,
+    Z: Shape.scissors,
   },
   C: {
     // scissors
-    X: shape.paper,
-    Y: shape.scissors,
-    Z: shape.rock
-  }
-}
+    X: Shape.paper,
+    Y: Shape.scissors,
+    Z: Shape.rock,
+  },
+};
 
 export const part2 = (input: Input) => {
-  const scores = input.map(line => {
-    const opponentShape = Number(mapInput[line.opponent])
-    const playerShape = Number(solutions[line.opponent][line.player])
-    return calculateScore(opponentShape, playerShape)
-  })
+  const scores = input.map((line) => {
+    const opponentShape = Number(MapInput[line.opponent]);
+    const playerShape = Number(solutions[line.opponent][line.player]);
+    return calculateScore(opponentShape, playerShape);
+  });
 
-  return scores.reduce((acc, value) => acc + value, 0)
-}
-console.log('Part 2', part2(format('input')))
+  return scores.reduce((acc, value) => acc + value, 0);
+};
+console.log('Part 2', part2(format('input')));
