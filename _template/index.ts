@@ -5,7 +5,6 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { _dirname } from 'utils/dirname';
 
 console.clear();
 
@@ -14,7 +13,7 @@ export type Filename = 'input' | 'input.test';
 
 const format = (filename: Filename): Input => {
   return fs
-    .readFileSync(path.resolve(_dirname, filename), 'utf8')
+    .readFileSync(path.resolve(__dirname, filename), 'utf8')
     .replace(/\r/g, '')
     .trim()
     .split('\n');
@@ -26,7 +25,10 @@ const format = (filename: Filename): Input => {
 export const part1 = (input: Input) => {
   return input;
 };
-console.log('Part 1', part1(format('input.test')));
+console.table({
+  'Part 1 (test)': part1(format('input.test')),
+  'Part 1 (final)': part1(format('input')),
+});
 
 /**
  * Part 2
@@ -34,4 +36,7 @@ console.log('Part 1', part1(format('input.test')));
 export const part2 = (input: Input) => {
   return input;
 };
-console.log('Part 2', part2(format('input.test')));
+console.table({
+  'Part 2 (test)': part2(format('input.test')),
+  'Part 2 (final)': part2(format('input')),
+});
