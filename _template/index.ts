@@ -3,20 +3,17 @@
  * https://adventofcode.com/XXXX/day/X
  */
 
-import fs from 'node:fs';
-import path from 'node:path';
+import { getInput } from '../utils/get_input';
 
-console.clear();
+export type Input = string[];
+export type Filename = 'input' | 'input.test' | 'input2.test';
 
-export type Input = any;
-export type Filename = 'input' | 'input.test';
+const YEAR = 2023;
+const DAY = 0;
 
-const format = (filename: Filename): Input => {
-  return fs
-    .readFileSync(path.resolve(__dirname, filename), 'utf8')
-    .replace(/\r/g, '')
-    .trim()
-    .split('\n');
+const format = async (filename: Filename): Promise<Input> => {
+  const input = await getInput<Filename>(YEAR, DAY, filename);
+  return input.replace(/\r/g, '').trim().split('\n');
 };
 
 /**
@@ -25,10 +22,6 @@ const format = (filename: Filename): Input => {
 export const part1 = (input: Input) => {
   return input;
 };
-console.table({
-  'Part 1 (test)': part1(format('input.test')),
-  'Part 1 (final)': part1(format('input')),
-});
 
 /**
  * Part 2
@@ -36,7 +29,17 @@ console.table({
 export const part2 = (input: Input) => {
   return input;
 };
-console.table({
-  'Part 2 (test)': part2(format('input.test')),
-  'Part 2 (final)': part2(format('input')),
-});
+
+const logParts = async () => {
+  const testInput = await format('input.test');
+  const finalInput = await format('input');
+
+  console.table({
+    'Part 1 (test)': part1(testInput),
+    'Part 1 (final)': part1(finalInput),
+    'Part 2 (test)': part2(testInput),
+    'Part 2 (final)': part2(finalInput),
+  });
+};
+
+void logParts();

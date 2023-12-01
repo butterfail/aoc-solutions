@@ -3,26 +3,23 @@
  * https://adventofcode.com/2023/day/1
  */
 
-import fs from 'node:fs';
-import path from 'node:path';
+import { getInput } from '../../utils/get_input';
 
-console.clear();
+type Input = string[];
+type Filename = 'input' | 'input.test' | 'input2.test';
 
-export type Input = string[];
-export type Filename = 'input' | 'input.test' | 'input2.test';
+const YEAR = 2023;
+const DAY = 1;
 
-const format = (filename: Filename): Input => {
-  return fs
-    .readFileSync(path.resolve(__dirname, filename), 'utf8')
-    .replace(/\r/g, '')
-    .trim()
-    .split('\n');
+const format = async (filename: Filename): Promise<Input> => {
+  const input = await getInput<Filename>(YEAR, DAY, filename);
+  return input.replace(/\r/g, '').trim().split('\n');
 };
 
 /**
  * Part 1
  */
-export const part1 = (input: Input) => {
+const part1 = (input: Input) => {
   return input
     .map((line) => {
       const digits = line
@@ -34,10 +31,6 @@ export const part1 = (input: Input) => {
     })
     .reduce((acc, value) => acc + value, 0);
 };
-console.table({
-  'Part 1 (test)': part1(format('input.test')),
-  'Part 1 (final)': part1(format('input')),
-});
 
 /**
  * Part 2
@@ -63,7 +56,7 @@ const convertWordToNumber = (str: string): number => {
   return Number.parseInt(str.charAt(0));
 };
 
-export const part2 = (input: Input) => {
+const part2 = (input: Input) => {
   return input
     .map((line) => {
       const digits = line
@@ -75,7 +68,18 @@ export const part2 = (input: Input) => {
     })
     .reduce((acc, value) => acc + value, 0);
 };
-console.table({
-  'Part 2 (test)': part2(format('input2.test')),
-  'Part 2 (final)': part2(format('input')),
-});
+
+const logParts = async () => {
+  const testInput = await format('input.test');
+  const testInput2 = await format('input2.test');
+  const finalInput = await format('input');
+
+  console.table({
+    'Part 1 (test)': part1(testInput),
+    'Part 1 (final)': part1(finalInput),
+    'Part 2 (test)': part2(testInput2),
+    'Part 2 (final)': part2(finalInput),
+  });
+};
+
+void logParts();
