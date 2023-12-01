@@ -6,7 +6,7 @@
 import { getInput } from '../utils/get_input';
 
 export type Input = string[];
-export type Filename = 'input' | 'input.test' | 'input2.test';
+export type Filename = 'input' | 'input.test';
 
 const YEAR = 2023;
 const DAY = 0;
