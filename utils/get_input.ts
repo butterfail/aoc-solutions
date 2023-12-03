@@ -1,20 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-export const getInput = async <T extends string>(
-  year: number,
-  day: number,
-  filename: T,
-): Promise<string> => {
+export const getInput = async (year: string, day: string): Promise<string> => {
   const { AOC_SESSION_COOKIE } = process.env;
   if (!AOC_SESSION_COOKIE) {
     throw new Error('AOC_SESSION_COOKIE is not defined');
   }
 
-  const filePath = path.resolve(`./${year}/day-${day.toString().padStart(2, '0')}/${filename}`);
+  const filePath = path.resolve(`./${year}/day-${day}/input`);
   if (fs.existsSync(filePath)) {
     return fs.readFileSync(filePath, 'utf-8');
   }

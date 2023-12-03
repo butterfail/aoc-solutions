@@ -3,8 +3,9 @@
   "author": "Grégoire Ciles",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "ts-node": "ts-node --transpileOnly",
+    "aoc": "node --experimental-specifier-resolution=node --loader ts-node/esm ./aoc.ts",
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "format:write": "prettier --write \"./**/*.{js,jsx,ts,tsx,mdx}\" --cache",
@@ -14,6 +15,7 @@
     "@types/node": "^20.10.1",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
+    "chalk": "5.3.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-unicorn": "^49.0.0",
