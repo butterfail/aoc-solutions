@@ -113,7 +113,9 @@ for (const [partName, fileName] of Object.entries(parts)) {
   logger.success(output + '\n');
 
   const answerQuestion = await rl.question(
-    '❔ ' + chalk.magenta('Submit answer? ' + chalk.yellow('(y/n)')),
+    `❔ Submit answer? ${chalk.grey('(')}${chalk.yellow('y')}${chalk.grey('/')}${chalk.yellow(
+      'n',
+    )}${chalk.grey(')')} `,
   );
   if (answerQuestion.trim().toLowerCase() === 'y' || answerQuestion.trim() === '') {
     logger.chore('Submitting answer');
