@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ESNext",
     "lib": ["ES2015.Promise", "ES6", "DOM", "ESNext"],
     "strict": true,
@@ -24,6 +24,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": false
+  },
+  "ts-node": {
+    "esm": true
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules", "dist"]
