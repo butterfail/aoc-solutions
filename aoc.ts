@@ -27,6 +27,52 @@ if (args.includes('--help') || args.includes('-h')) {
   process.exit(0);
 }
 
+if (args.includes('--setup') || args.includes('-s')) {
+  if (!args[1] || !args[2]) {
+    logger.error('Year and day must be provided.');
+    process.exit();
+  }
+
+  const year = args[1];
+  const day = args[2].toString().padStart(2, '0');
+
+  const targetPath = `./${year}/day-${day}`;
+
+  if (fs.existsSync(targetPath)) {
+    logger.error(`Folder ${chalk.underline(targetPath)} already exists.`);
+    process.exit();
+  }
+
+  const baseTemplatePath = './_template';
+
+  if (!fs.existsSync(baseTemplatePath)) {
+    logger.error(`Template folder ${chalk.underline(baseTemplatePath)} doesn't exist.`);
+    process.exit();
+  }
+
+  logger.chore('Creating day folder.');
+  if (!fs.existsSync(targetPath)) {
+    fs.mkdirSync(targetPath, { recursive: true });
+  }
+
+  logger.chore('copy template file');
+  const fileName = 'part_1.ts';
+  fs.copyFileSync(
+    path.resolve(`${baseTemplatePath}/${fileName}`),
+    path.resolve(`${targetPath}/${fileName}`),
+  );
+
+  logger.chore('copy test file');
+  const testFileName = 'part_1.test';
+  fs.copyFileSync(
+    path.resolve(`${baseTemplatePath}/${testFileName}`),
+    path.resolve(`${targetPath}/${testFileName}`),
+  );
+
+  logger.success('Day folder created.');
+  process.exit();
+}
+
 const now = new Date();
 const year = args[0] ?? now.getFullYear().toString();
 const day = (args[1] ?? now.getDate()).toString().padStart(2, '0');
